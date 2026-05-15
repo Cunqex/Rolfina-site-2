@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rolfina GmbH – Wasserschaden & Sanierung München & NRW</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    [data-theme="light"] {
+      --c-bg:            #F5F0EB;
+      --c-surface:       #FFFFFF;
+      --c-surface2:      #EDE8E2;
+      --c-border:        rgba(122,78,40,0.12);
+      --c-border2:       rgba(122,78,40,0.25);
+      --c-text:          #22222B;
+      --c-muted:         #6B5E52;
+      --c-accent:        #B07848;
+      --c-accent-h:      #7A4E28;
+      --c-accent-light:  #D4A882;
+      --c-accent-bg:     rgba(176,120,72,0.10);
+      --c-accent-border: rgba(176,120,72,0.30);
+      --c-slate:         #3C3C48;
+      --c-topbar:        #3C3C48;
+      --c-logo-filter:   none;
+      --shadow:          0 4px 20px rgba(34,34,43,0.10);
+      --shadow-lg:       0 16px 48px rgba(34,34,43,0.16);
+    }
+    [data-theme="dark"] {
+      --c-bg:            #1A1914;
+      --c-surface:       #242219;
+      --c-surface2:      #2E2C22;
+      --c-border:        rgba(212,168,130,0.10);
+      --c-border2:       rgba(212,168,130,0.22);
+      --c-text:          #F5F0EB;
+      --c-muted:         #9A8C7E;
+      --c-accent:        #C89060;
+      --c-accent-h:      #D4A882;
+      --c-accent-light:  #B07848;
+      --c-accent-bg:     rgba(200,144,96,0.12);
+      --c-accent-border: rgba(200,144,96,0.30);
+      --c-slate:         #8888A0;
+      --c-topbar:        #2E2C22;
+      --c-logo-filter:   brightness(0) invert(1);
+      --shadow:          0 4px 20px rgba(0,0,0,0.35);
+      --shadow-lg:       0 16px 48px rgba(0,0,0,0.48);
+    }
+    :root {
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --radius:       8px;
+      --transition:   0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--c-bg); color: var(--c-text); line-height: 1.65; overflow-x: hidden; transition: background var(--transition), color var(--transition); }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    ul { list-style: none; }
+
+    /* TOPBAR */
+    #topbar { background: var(--c-topbar); color: #C8A882; text-align: center; padding: 9px 16px; font-size: 13px; font-family: var(--font-body); letter-spacing: 0.04em; }
+    #topbar a { color: #E8C8A0; font-weight: 600; }
+
+    /* NAVBAR — left-heavy editorial style */
+    #navbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 72px;
+      border-bottom: 1px solid var(--c-border);
+      transition: background var(--transition);
+    }
+    [data-theme="light"] #navbar { background: rgba(245,240,235,0.95); backdrop-filter: blur(16px); }
+    [data-theme="dark"]  #navbar { background: rgba(26,25,20,0.95);    backdrop-filter: blur(16px); }
+
+    .nav-logo { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .nav-logo img { height: 34px; filter: var(--c-logo-filter); transition: filter var(--transition); }
+    .nav-logo-fallback { display: none; font-family: var(--font-display); font-size: 20px; color: var(--c-text); }
+    .nav-divider { width: 1px; height: 28px; background: var(--c-border2); margin: 0 4px; }
+    .nav-links { display: flex; gap: 0; align-items: center; }
+    .nav-links a { padding: 8px 14px; font-size: 13px; font-weight: 500; color: var(--c-muted); letter-spacing: 0.02em; transition: color var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--c-text); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .nav-cta { background: var(--c-accent); color: #fff; padding: 9px 20px; border-radius: var(--radius); font-size: 13px; font-weight: 600; letter-spacing: 0.03em; transition: background var(--transition); }
+    .nav-cta:hover { background: var(--c-accent-h); }
+    .theme-toggle { width: 34px; height: 34px; border-radius: var(--radius); background: var(--c-surface2); border: 1px solid var(--c-border); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--c-muted); transition: background var(--transition); }
+    .theme-toggle:hover { background: var(--c-border2); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+    .nav-hamburger span { display: block; width: 20px; height: 1.5px; background: var(--c-text); border-radius: 2px; }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--c-bg); z-index: 200; padding: 80px 40px 40px; flex-direction: column; gap: 8px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-close { position: absolute; top: 20px; right: 20px; font-size: 26px; color: var(--c-text); }
+    .mobile-menu a { font-size: 20px; font-family: var(--font-display); padding: 12px 0; border-bottom: 1px solid var(--c-border); color: var(--c-text); }
+
+    /* PAGES */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO — split with large type on left, stacked image grid right */
+    .hero { display: grid; grid-template-columns: 55% 45%; min-height: 88vh; }
+    .hero-left { padding: 80px 6% 80px 7%; display: flex; flex-direction: column; justify-content: center; background: var(--c-bg); }
+    .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+    .hero-eyebrow-line { width: 40px; height: 1px; background: var(--c-accent); }
+    .hero-eyebrow span { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-accent); }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(42px,5vw,72px); line-height: 1.05; letter-spacing: -0.02em; font-weight: 700; color: var(--c-text); margin-bottom: 28px; }
+    .hero h1 em { font-style: italic; font-weight: 400; color: var(--c-accent); }
+    .hero-sub { font-size: 16px; color: var(--c-muted); max-width: 420px; line-height: 1.8; margin-bottom: 44px; font-weight: 300; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: var(--c-accent); color: #fff; font-weight: 600; font-size: 14px; padding: 13px 24px; border-radius: var(--radius); letter-spacing: 0.02em; transition: background var(--transition), transform var(--transition); }
+    .btn-primary:hover { background: var(--c-accent-h); transform: translateY(-1px); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--c-border2); color: var(--c-text); font-weight: 500; font-size: 14px; padding: 13px 24px; border-radius: var(--radius); transition: border-color var(--transition), background var(--transition); }
+    .btn-ghost:hover { border-color: var(--c-accent); background: var(--c-accent-bg); }
+    .hero-stats { display: flex; gap: 0; border-top: 1px solid var(--c-border); }
+    .hero-stat { flex: 1; padding: 20px 0 0; padding-right: 32px; }
+    .hero-stat + .hero-stat { border-left: 1px solid var(--c-border); padding-left: 32px; padding-right: 0; }
+    .hero-stat strong { display: block; font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--c-accent); letter-spacing: -0.03em; }
+    .hero-stat span { font-size: 12px; color: var(--c-muted); letter-spacing: 0.02em; }
+
+    /* Hero right — image mosaic */
+    .hero-right { position: relative; overflow: hidden; background: var(--c-slate); display: grid; grid-template-rows: 1fr 1fr; }
+    .hero-img-top, .hero-img-bottom { overflow: hidden; }
+    .hero-img-top img, .hero-img-bottom img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6) saturate(0.5) sepia(0.2); transition: filter 0.6s ease; }
+    [data-theme="light"] .hero-img-top img, [data-theme="light"] .hero-img-bottom img { filter: brightness(0.65) saturate(0.55) sepia(0.15); }
+    .hero-right:hover img { filter: brightness(0.75) saturate(0.7); }
+    .hero-right-overlay { position: absolute; inset: 0; background: linear-gradient(to right, var(--c-bg) 0%, transparent 30%); pointer-events: none; }
+    .hero-badge { position: absolute; bottom: 32px; left: 32px; background: var(--c-accent); color: #fff; border-radius: var(--radius); padding: 16px 20px; }
+    .hero-badge .num { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1; }
+    .hero-badge .lbl { font-size: 11px; opacity: 0.85; letter-spacing: 0.04em; margin-top: 3px; }
+
+    /* SECTION STYLES */
+    .section { padding: 88px 7%; }
+    .section-sm { padding: 52px 7%; }
+    .section-alt { background: var(--c-surface); border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border); }
+    .eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .eyebrow-line { width: 32px; height: 1px; background: var(--c-accent); flex-shrink: 0; }
+    .eyebrow span { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-accent); }
+    .section-title { font-family: var(--font-display); font-size: clamp(28px,3.5vw,48px); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; font-weight: 700; color: var(--c-text); }
+    .section-sub { font-size: 16px; color: var(--c-muted); max-width: 540px; line-height: 1.8; font-weight: 300; }
+    .section-header { margin-bottom: 48px; }
+
+    /* SERVICES — horizontal card list */
+    .services-list-h { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--c-border); border-radius: 16px; overflow: hidden; }
+    .service-row {
+      display: grid; grid-template-columns: 80px 1fr auto;
+      align-items: center; gap: 32px;
+      padding: 28px 32px;
+      background: var(--c-surface);
+      cursor: pointer;
+      transition: background var(--transition);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .service-row:last-child { border-bottom: none; }
+    .service-row:hover { background: var(--c-accent-bg); }
+    .service-row-num { font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--c-border2); line-height: 1; letter-spacing: -0.04em; }
+    .service-row-body h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; color: var(--c-text); }
+    .service-row-body p { font-size: 14px; color: var(--c-muted); font-weight: 300; line-height: 1.6; }
+    .service-row-arrow { font-size: 20px; color: var(--c-accent-light); opacity: 0; transition: opacity var(--transition), transform var(--transition); }
+    .service-row:hover .service-row-arrow { opacity: 1; transform: translateX(4px); }
+    .service-row-icon { font-size: 28px; }
+
+    /* WHY — offset grid */
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .why-image-wrap { position: relative; }
+    .why-image-main { border-radius: 12px; overflow: hidden; aspect-ratio: 3/4; }
+    .why-image-main img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) saturate(0.7) sepia(0.1); }
+    [data-theme="light"] .why-image-main img { filter: brightness(0.85) saturate(0.8); }
+    .why-accent-box { position: absolute; bottom: -32px; right: -32px; background: var(--c-accent); color: #fff; border-radius: 12px; padding: 28px; width: 200px; box-shadow: var(--shadow-lg); }
+    .why-accent-box .big { font-family: var(--font-display); font-size: 42px; font-weight: 700; line-height: 1; }
+    .why-accent-box .small { font-size: 12px; opacity: 0.85; margin-top: 6px; line-height: 1.4; }
+    .why-content { padding-top: 20px; }
+    .why-features { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+    .feature-row { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--c-border); align-items: flex-start; }
+    .feature-row:first-child { border-top: 1px solid var(--c-border); }
+    .feature-icon { width: 44px; height: 44px; background: var(--c-accent-bg); border: 1px solid var(--c-accent-border); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .feature-row h4 { font-weight: 600; font-size: 15px; margin-bottom: 4px; color: var(--c-text); }
+    .feature-row p { font-size: 13px; color: var(--c-muted); line-height: 1.65; font-weight: 300; }
+
+    /* FAQ */
+    .faq-list { max-width: 760px; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--c-border); border-radius: 12px; overflow: hidden; }
+    .faq-item { border-bottom: 1px solid var(--c-border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { width: 100%; text-align: left; padding: 20px 24px; font-size: 15px; font-weight: 500; color: var(--c-text); display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--c-surface); transition: background var(--transition); }
+    .faq-q:hover { background: var(--c-accent-bg); }
+    .faq-chevron { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--c-border2); display: flex; align-items: center; justify-content: center; font-size: 12px; transition: transform var(--transition), background var(--transition), border-color var(--transition); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); background: var(--c-accent); border-color: var(--c-accent); color: #fff; }
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: var(--c-surface); }
+    .faq-body-inner { padding: 0 24px 24px; color: var(--c-muted); font-size: 14px; line-height: 1.85; font-weight: 300; }
+    .faq-body-inner strong { color: var(--c-text); font-weight: 600; }
+
+    /* CTA BAND */
+    .cta-band { margin: 0 7% 80px; border-radius: 16px; overflow: hidden; position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; padding: 56px 56px; background: var(--c-slate); }
+    [data-theme="light"] .cta-band { background: var(--c-slate); }
+    [data-theme="dark"]  .cta-band { background: var(--c-surface2); border: 1px solid var(--c-border2); }
+    .cta-band::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 80px); pointer-events: none; }
+    .cta-band h2 { font-family: var(--font-display); font-size: clamp(24px,3vw,38px); color: #fff; line-height: 1.2; font-weight: 700; }
+    .cta-band h2 em { font-style: italic; font-weight: 400; color: var(--c-accent-light); }
+    .cta-band-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+    .phone-big { font-family: var(--font-display); font-size: 28px; color: var(--c-accent-light); letter-spacing: -0.03em; font-weight: 700; }
+    .phone-label { font-size: 12px; color: rgba(255,255,255,0.55); }
+
+    /* PAGE HERO */
+    .page-hero { padding: 64px 7% 52px; border-bottom: 1px solid var(--c-border); }
+    .breadcrumb { font-size: 12px; color: var(--c-muted); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.04em; }
+    .breadcrumb a:hover { color: var(--c-accent); }
+
+    /* CONTENT */
+    .wasser-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .content-prose { color: var(--c-muted); font-size: 15px; line-height: 1.85; font-weight: 300; }
+    .content-prose h2 { font-family: var(--font-display); font-size: 28px; color: var(--c-text); letter-spacing: -0.02em; margin: 40px 0 12px; font-weight: 700; }
+    .content-prose h2:first-child { margin-top: 0; }
+    .content-prose p { margin-bottom: 14px; }
+    .content-prose strong { color: var(--c-text); font-weight: 600; }
+    .content-prose ul { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .content-prose ul li { display: flex; gap: 10px; font-size: 14px; }
+    .content-prose ul li::before { content: '—'; color: var(--c-accent); flex-shrink: 0; }
+    .services-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .svc-item { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 18px; transition: border-color var(--transition); }
+    .svc-item:hover { border-color: var(--c-accent-border); }
+    .svc-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--c-text); }
+    .svc-item p { font-size: 12px; color: var(--c-muted); line-height: 1.6; font-weight: 300; }
+    .technique-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+    .technique-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 22px; transition: border-color var(--transition); }
+    .technique-card:hover { border-color: var(--c-accent-border); }
+    .technique-card h4 { font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--c-accent); }
+    .technique-card p { font-size: 13px; color: var(--c-muted); line-height: 1.65; font-weight: 300; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+    .gallery-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius); filter: brightness(0.8) saturate(0.7); transition: filter var(--transition), transform var(--transition); cursor: zoom-in; }
+    .gallery-grid img:hover { filter: brightness(1) saturate(0.9); transform: scale(1.02); }
+    .side-cta { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 12px; padding: 24px; margin-top: 24px; }
+    .side-img { border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; margin-bottom: 20px; }
+    .side-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) saturate(0.7); }
+
+    /* JOBS */
+    .jobs-grid { display: flex; flex-direction: column; gap: 16px; }
+    .job-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 12px; padding: 28px; transition: border-color var(--transition); }
+    .job-card:hover { border-color: var(--c-accent-border); }
+    .job-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 16px; }
+    .job-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; color: var(--c-text); }
+    .job-location { font-size: 11px; font-weight: 600; background: var(--c-accent-bg); color: var(--c-accent); padding: 4px 12px; border-radius: 100px; border: 1px solid var(--c-accent-border); letter-spacing: 0.04em; flex-shrink: 0; }
+    .job-body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .job-section h4 { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 10px; }
+    .job-section ul { display: flex; flex-direction: column; gap: 6px; }
+    .job-section ul li { font-size: 13px; color: var(--c-muted); display: flex; gap: 8px; font-weight: 300; }
+    .job-section ul li::before { content: '–'; color: var(--c-accent-light); flex-shrink: 0; }
+    .job-benefits { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--c-border); }
+    .benefit-tag { font-size: 11px; background: var(--c-surface2); color: var(--c-muted); padding: 3px 10px; border-radius: 100px; border: 1px solid var(--c-border); }
+    .location-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--c-muted); margin-bottom: 24px; letter-spacing: 0.04em; }
+    .location-badge::before { content: ''; display: block; width: 28px; height: 1px; background: var(--c-accent); }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .about-img { border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; position: relative; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.82) sepia(0.1); }
+    .about-pullquote { margin-top: 24px; border-left: 3px solid var(--c-accent); padding: 16px 20px; background: var(--c-surface); border-radius: 0 var(--radius) var(--radius) 0; }
+    .about-pullquote p { font-family: var(--font-display); font-size: 17px; font-style: italic; color: var(--c-text); line-height: 1.5; margin-bottom: 8px; }
+    .about-pullquote cite { font-size: 12px; color: var(--c-muted); font-style: normal; }
+    .about-text h2 { font-family: var(--font-display); font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 20px; color: var(--c-text); }
+    .about-text p { font-size: 15px; color: var(--c-muted); line-height: 1.85; margin-bottom: 14px; font-weight: 300; }
+    .about-services { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 32px; }
+    .about-svc { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 14px 16px; font-size: 13px; color: var(--c-muted); display: flex; gap: 10px; font-weight: 300; }
+    .about-svc::before { content: '→'; color: var(--c-accent); flex-shrink: 0; font-size: 12px; margin-top: 1px; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 11px 14px; color: var(--c-text); font-family: var(--font-body); font-size: 14px; outline: none; font-weight: 300; transition: border-color var(--transition); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--c-muted); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--c-accent); }
+    .form-group textarea { min-height: 120px; resize: vertical; }
+    .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A8C7E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-check { display: flex; gap: 10px; margin-bottom: 20px; }
+    .form-check input { margin-top: 3px; accent-color: var(--c-accent); flex-shrink: 0; }
+    .form-check label { font-size: 12px; color: var(--c-muted); font-weight: 300; }
+    .form-check a { color: var(--c-accent); }
+    .contact-info { display: flex; flex-direction: column; gap: 24px; }
+    .contact-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 12px; padding: 22px; }
+    .contact-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-bottom: 14px; color: var(--c-text); }
+    .contact-detail { display: flex; align-items: center; gap: 10px; color: var(--c-muted); font-size: 13px; margin-bottom: 8px; font-weight: 300; }
+    .contact-detail a { color: var(--c-accent); }
+    .icon-circle { width: 28px; height: 28px; background: var(--c-surface2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .team-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 10px; overflow: hidden; }
+    .team-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: top; }
+    .team-card-body { padding: 12px; }
+    .team-card h4 { font-weight: 600; font-size: 13px; margin-bottom: 2px; color: var(--c-text); }
+    .team-card span { font-size: 11px; color: var(--c-muted); }
+    .team-card a { display: block; margin-top: 7px; font-size: 11px; color: var(--c-accent); }
+
+    /* FOOTER */
+    footer { background: var(--c-slate); color: rgba(255,255,255,0.7); padding: 56px 7% 28px; }
+    [data-theme="dark"] footer { background: var(--c-surface); border-top: 1px solid var(--c-border); }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    [data-theme="dark"] .footer-top { border-bottom-color: var(--c-border); }
+    .footer-logo img { height: 30px; filter: brightness(0) invert(1); }
+    [data-theme="dark"] .footer-logo img { filter: var(--c-logo-filter); }
+    .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; margin: 14px 0 20px; max-width: 260px; font-weight: 300; }
+    [data-theme="dark"] .footer-brand p { color: var(--c-muted); }
+    .footer-social { display: flex; gap: 8px; }
+    .footer-social a { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 12px; color: rgba(255,255,255,0.5); transition: background var(--transition); }
+    .footer-social a:hover { background: var(--c-accent); color: #fff; }
+    .footer-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    [data-theme="dark"] .footer-col h4 { color: var(--c-muted); }
+    .footer-col ul { display: flex; flex-direction: column; gap: 9px; }
+    .footer-col ul li a { font-size: 13px; color: rgba(255,255,255,0.6); transition: color var(--transition); font-weight: 300; }
+    .footer-col ul li a:hover { color: #fff; }
+    [data-theme="dark"] .footer-col ul li a { color: var(--c-muted); }
+    [data-theme="dark"] .footer-col ul li a:hover { color: var(--c-text); }
+    .footer-address { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.8; font-weight: 300; }
+    .footer-address strong { color: rgba(255,255,255,0.8); font-size: 13px; display: block; margin-bottom: 2px; font-weight: 600; }
+    [data-theme="dark"] .footer-address { color: var(--c-muted); }
+    [data-theme="dark"] .footer-address strong { color: var(--c-text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; font-size: 12px; color: rgba(255,255,255,0.35); }
+    [data-theme="dark"] .footer-bottom { color: var(--c-muted); }
+    .footer-bottom a { color: rgba(255,255,255,0.35); }
+    .footer-bottom a:hover { color: rgba(255,255,255,0.7); }
+
+    /* FLOAT */
+    .emergency-float { position: fixed; bottom: 24px; right: 24px; background: var(--c-accent-h); color: #fff; border-radius: var(--radius); padding: 12px 20px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-lg); z-index: 50; letter-spacing: 0.02em; animation: floatup 3s ease-in-out infinite; }
+    @keyframes floatup { 0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)} }
+    .pulse-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; animation: blink 1.5s infinite; }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+    /* PARTNERS */
+    .partners-row { display: flex; gap: 40px; flex-wrap: wrap; align-items: center; justify-content: center; }
+    .partners-row img { height: 28px; object-fit: contain; filter: grayscale(1) opacity(0.35); transition: filter var(--transition); }
+    .partners-row img:hover { filter: grayscale(0) opacity(0.9); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { display: none; }
+      .why-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .technique-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .section { padding: 52px 5%; }
+      .nav-links { display: none; }
+      .nav-right .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-left { padding: 52px 5%; }
+      .hero-stats { flex-direction: column; gap: 0; }
+      .hero-stat + .hero-stat { border-left: none; border-top: 1px solid var(--c-border); padding-left: 0; padding-top: 16px; margin-top: 16px; }
+      .cta-band { grid-template-columns: 1fr; padding: 36px 28px; margin: 0 5% 60px; }
+      .cta-band-right { align-items: flex-start; }
+      .contact-grid, .wasser-grid, .about-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .technique-grid { grid-template-columns: 1fr; }
+      .services-grid-2 { grid-template-columns: 1fr; }
+      .job-body { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .about-services { grid-template-columns: 1fr; }
+      .service-row { grid-template-columns: 1fr; gap: 12px; }
+      .service-row-num { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="topbar">✦ 24h Notfallhotline: <a href="tel:+498000066444">0800 – 00 66 444</a> &nbsp;·&nbsp; kostenfrei &nbsp;·&nbsp; München &amp; NRW</div>
+
+<nav id="navbar">
+  <a class="nav-logo" href="#" onclick="showPage('home'); return false;">
+    <img src="https://rolfina.eu/wp-content/uploads/2020/12/logo-rolfina.svg" alt="Rolfina GmbH" onerror="this.style.display='none'; document.querySelector('.nav-logo-fallback').style.display='block';">
+    <span class="nav-logo-fallback">Rolfina</span>
+  </a>
+  <div class="nav-divider"></div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home'); return false;" data-page="home">Startseite</a></li>
+    <li><a href="#" onclick="showPage('wasser'); return false;" data-page="wasser">Wasserschaden</a></li>
+    <li><a href="#" onclick="showPage('brand'); return false;" data-page="brand">Brandschaden</a></li>
+    <li><a href="#" onclick="showPage('sanierung'); return false;" data-page="sanierung">Gebäudesanierung</a></li>
+    <li><a href="#" onclick="showPage('ueber'); return false;" data-page="ueber">Über uns</a></li>
+    <li><a href="#" onclick="showPage('jobs'); return false;" data-page="jobs">Jobs</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <a href="#" onclick="showPage('kontakt'); return false;" class="nav-cta" data-page="kontakt">Kontakt</a>
+    <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#" onclick="showPage('home'); closeMobile(); return false;">Startseite</a>
+  <a href="#" onclick="showPage('wasser'); closeMobile(); return false;">Wasserschaden</a>
+  <a href="#" onclick="showPage('brand'); closeMobile(); return false;">Brandschaden</a>
+  <a href="#" onclick="showPage('sanierung'); closeMobile(); return false;">Gebäudesanierung</a>
+  <a href="#" onclick="showPage('ueber'); closeMobile(); return false;">Über uns</a>
+  <a href="#" onclick="showPage('jobs'); closeMobile(); return false;">Jobs</a>
+  <a href="#" onclick="showPage('kontakt'); closeMobile(); return false;">Kontakt</a>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><div class="hero-eyebrow-line"></div><span>München & NRW – Soforteinsatz</span></div>
+      <h1>Schäden beseitigen.<br><em>Leben wiederherstellen.</em></h1>
+      <p class="hero-sub">Rolfina GmbH – Ihr zuverlässiger Partner bei Wasserschäden, Brandschäden und Gebäudesanierung. 24/7 erreichbar, direkter Versicherungskontakt.</p>
+      <div class="hero-actions">
+        <a href="tel:+498000066444" class="btn-primary">📞 Kostenlos anrufen</a>
+        <a href="#" onclick="showPage('kontakt'); return false;" class="btn-ghost">Kontaktformular →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>24/7</strong><span>Notdienst erreichbar</span></div>
+        <div class="hero-stat"><strong>2</strong><span>Standorte DE</span></div>
+        <div class="hero-stat"><strong>100%</strong><span>Versicherungsabwicklung</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-top"><img src="https://rolfina.eu/wp-content/uploads/2024/01/rolfina-content_ueber-uns01-1.jpg" alt="Rolfina Einsatz"></div>
+      <div class="hero-img-bottom"><img src="https://rolfina.de/wp-content/uploads/2026/04/team_rolfina.jpg" alt="Rolfina Team"></div>
+      <div class="hero-right-overlay"></div>
+      <div class="hero-badge"><div class="num">0800</div><div class="lbl">00 66 444 – kostenfrei</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Raum München und NRW</span></div>
+      <h2 class="section-title">Unsere Leistungsbereiche</h2>
+    </div>
+    <div class="services-list-h">
+      <div class="service-row" onclick="showPage('wasser')">
+        <div class="service-row-num">01</div>
+        <div class="service-row-body"><h3>💧 Wasser- & Schimmelschaden</h3><p>Unverzügliche Soforthilfe, professionelle Trocknung, Schimmel- und Bakteriensanierung, Leckageortung und vollständige Versicherungsabwicklung.</p></div>
+        <div class="service-row-arrow">→</div>
+      </div>
+      <div class="service-row" onclick="showPage('brand')">
+        <div class="service-row-num">02</div>
+        <div class="service-row-body"><h3>🔥 Brandschaden</h3><p>Rußbeseitigung, Geruchsneutralisation durch Fogging und Ozonbehandlung, vollständiger Wiederaufbau für Wohn- und Gewerbeimmobilien.</p></div>
+        <div class="service-row-arrow">→</div>
+      </div>
+      <div class="service-row" onclick="showPage('sanierung')">
+        <div class="service-row-num">03</div>
+        <div class="service-row-body"><h3>🏗️ Gebäudesanierung</h3><p>Energetische Sanierung, Abbruch, Mauerarbeiten, Trockenbau, Dach, Innenausbau und Dämmung – alles aus einer Hand.</p></div>
+        <div class="service-row-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="why-grid">
+      <div class="why-image-wrap">
+        <div class="why-image-main"><img src="https://rolfina.eu/wp-content/uploads/2024/02/rolfina-headerbild-jueber-uns03.jpg" alt="Rolfina"></div>
+        <div class="why-accent-box"><div class="big">24/7</div><div class="small">Notdienst rund um die Uhr</div></div>
+      </div>
+      <div class="why-content">
+        <div class="eyebrow"><div class="eyebrow-line"></div><span>Dafür steht Rolfina</span></div>
+        <h2 class="section-title">Gemeinsam Hand in Hand</h2>
+        <p class="section-sub">Sie als Kunde stehen bei uns im Vordergrund. Ihre Zufriedenheit ist unser Ansporn.</p>
+        <div class="why-features">
+          <div class="feature-row"><div class="feature-icon">🕐</div><div><h4>24 Stunden Tag- und Nachtdienst</h4><p>Soforthilfe bei Räumung, Reinigung, Wasserentfernung, Desinfektion – rund um die Uhr, 365 Tage im Jahr.</p></div></div>
+          <div class="feature-row"><div class="feature-icon">🎓</div><div><h4>Planung durch Diplom-Ingenieure</h4><p>Hauseigene Diplom-Ingenieure und vollständige Abwicklung aus einer Hand.</p></div></div>
+          <div class="feature-row"><div class="feature-icon">📋</div><div><h4>Direktabwicklung mit Versicherungen</h4><p>Wir übernehmen auf Wunsch die komplette Kommunikation mit Ihrer Versicherung.</p></div></div>
+          <div class="feature-row"><div class="feature-icon">📦</div><div><h4>Bergung & Einlagerung</h4><p>Nasse Teppiche, Einrichtung, Warenbestände – wir bergen, reinigen und lagern alles ein.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Wir sind für Sie da</span></div>
+      <h2 class="section-title">Häufige Fragen</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Welche Versicherungen regulieren einen Wasser- oder Brandschaden?<span class="faq-chevron">▾</span></button><div class="faq-body"><div class="faq-body-inner"><p>Generell regulieren <strong>Gebäude-, Elementar-, Hausrat-, Haftpflicht- und Inventarversicherungen</strong> Wasser- oder Brandschäden. Wir empfehlen, Ihre Police bereits vor einem Schadenereignis zu prüfen.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Wie erfolgt die Schadenmeldung?<span class="faq-chevron">▾</span></button><div class="faq-body"><div class="faq-body-inner"><p><strong>Bitte keine Zeit verlieren!</strong> Melden Sie Ihren Schaden an 365 Tagen rund um die Uhr über unsere kostenfreie <strong>24h Hotline 0800 0066444</strong>. Melden Sie den Schaden gleichzeitig bei Ihrer Versicherung.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Welche Kosten trägt der Versicherer?<span class="faq-chevron">▾</span></button><div class="faq-body"><div class="faq-body-inner"><p>Vorbehaltlich versicherungstechnischer Prüfung trägt Ihr Versicherer in der Regel die Kosten für eine vollständige Wiederherstellung. Wir unterstützen Sie aktiv bei der gesamten Abwicklung.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Wie lange dauert eine Trocknung nach Wasserschaden?<span class="faq-chevron">▾</span></button><div class="faq-body"><div class="faq-body-inner"><p>Die Trocknungsdauer hängt stark vom Ausmaß ab. Bei einem mittleren Schaden rechnen Sie mit <strong>2–6 Wochen</strong>. Wir dokumentieren den Fortschritt lückenlos.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Arbeiten Sie mit allen Versicherungen zusammen?<span class="faq-chevron">▾</span></button><div class="faq-body"><div class="faq-body-inner"><p>Ja – wir arbeiten mit allen gängigen Versicherungen zusammen und übernehmen auf Wunsch die <strong>Direktabwicklung</strong>.</p></div></div></div>
+    </div>
+  </section>
+
+  <section class="section-sm" style="border-top:1px solid var(--c-border);">
+    <div class="eyebrow" style="justify-content:center; margin-bottom:28px;"><div class="eyebrow-line"></div><span>Unser Netzwerk</span><div class="eyebrow-line"></div></div>
+    <div class="partners-row">
+      <img src="https://rolfina.eu/wp-content/uploads/2020/12/logo_jati.svg" alt="JATI">
+      <img src="https://rolfina.eu/wp-content/uploads/2021/01/logo-abw.jpg" alt="ABW" style="border-radius:4px;">
+      <img src="https://rolfina.eu/wp-content/uploads/2021/01/logo-trotec.svg" alt="Trotec">
+      <img src="https://rolfina.eu/wp-content/uploads/2021/02/Locatec_RGB-web-transparent.png" alt="Locatec">
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h2>Notfall? Wir sind <em>sofort</em> für Sie da.</h2>
+    <div class="cta-band-right">
+      <div class="phone-big">0800 – 00 66 444</div>
+      <div class="phone-label">Kostenfrei · 24 Stunden · 365 Tage</div>
+      <a href="tel:+498000066444" class="btn-primary">Jetzt anrufen</a>
+    </div>
+  </div>
+</div>
+
+<!-- WASSERSCHADEN -->
+<div class="page" id="page-wasser">
+  <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home'); return false;">Startseite</a> / Wasserschaden</div><div class="eyebrow"><div class="eyebrow-line"></div><span>Soforthilfe & Sanierung</span></div><h1 class="section-title">Wasser- & Schimmelschaden</h1><p class="section-sub">Bei Wasser- und Schimmelschäden zählt jede Minute. Wir helfen sofort – kompetent, schnell und mit direkter Versicherungsabwicklung.</p></div>
+  <section class="section">
+    <div class="wasser-grid">
+      <div class="content-prose">
+        <h2>Was tun bei einem Wasserschaden?</h2>
+        <p>Ob durch einen Rohrbruch, eine defekte Waschmaschine, Starkregen oder eine verstopfte Entwässerungsanlage – Wasserschäden entstehen oft plötzlich und können erhebliche Schäden verursachen. Handeln Sie unverzüglich!</p>
+        <p>Je nach Ausmaß wenden wir verschiedene effiziente Techniken an: von der professionellen Trocknung bis zur vollständigen Schimmel- und Bakteriensanierung.</p>
+        <h2>Schimmelschäden – unsichtbare Gefahr</h2>
+        <p>Schimmel entsteht häufig als Folge von Wasserschäden, die nicht vollständig saniert wurden. Er kann sich in Wänden, unter Bodenbelägen und hinter Verkleidungen ausbreiten – oft unbemerkt.</p>
+        <div style="margin-top:40px;"><h2 style="font-size:22px;margin-bottom:20px;">Leistungen im Überblick</h2>
+        <div class="services-grid-2">
+          <div class="svc-item"><h4>Soforthilfe & Erstmaßnahmen</h4><p>Umgehende Sicherung, Räumung und Wasserentfernung.</p></div>
+          <div class="svc-item"><h4>Professionelle Trocknung</h4><p>Modernste Trocknungsgeräte mit lückenloser Dokumentation.</p></div>
+          <div class="svc-item"><h4>Schimmel- & Bakteriensanierung</h4><p>Nachhaltige Bekämpfung von Schimmel und Krankheitserregern.</p></div>
+          <div class="svc-item"><h4>Desinfektion & Keimreduzierung</h4><p>Hygienische Reinigung aller betroffenen Bereiche.</p></div>
+          <div class="svc-item"><h4>Bergung & Einlagerung</h4><p>Rettung und Einlagerung von Inventar und Warenbeständen.</p></div>
+          <div class="svc-item"><h4>Leckageortung</h4><p>Präzise Ortung verborgener Lecks ohne unnötige Öffnungen.</p></div>
+          <div class="svc-item"><h4>Sanierung von Holzzerstörern</h4><p>Bekämpfung von Hausschwamm und Schädlingen.</p></div>
+          <div class="svc-item"><h4>Versicherungsabwicklung</h4><p>Direkte Kommunikation und Abrechnung mit Ihrer Versicherung.</p></div>
+        </div></div>
+      </div>
+      <div>
+        <div class="side-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Wasserschaden"></div>
+        <div class="side-cta">
+          <p style="font-size:13px;color:var(--c-muted);margin-bottom:14px;font-weight:300;"><strong style="color:var(--c-text);font-weight:600;">Soforthilfe anfordern</strong><br>Kostenfrei · 24/7 erreichbar</p>
+          <a href="tel:+498000066444" class="btn-primary" style="width:100%;justify-content:center;">📞 0800 – 00 66 444</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="cta-band"><h2>Wasserschaden entdeckt? <em>Keine Zeit verlieren!</em></h2><div class="cta-band-right"><div class="phone-big">0800 – 00 66 444</div><div class="phone-label">Kostenfrei · 24/7</div><a href="#" onclick="showPage('kontakt'); return false;" class="btn-primary">Anfrage stellen</a></div></div>
+</div>
+
+<!-- BRANDSCHADEN -->
+<div class="page" id="page-brand">
+  <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home'); return false;">Startseite</a> / Brandschaden</div><div class="eyebrow"><div class="eyebrow-line"></div><span>Brandschadensanierung</span></div><h1 class="section-title">Brandschaden</h1><p class="section-sub">Professionelle Beseitigung von Brandschäden, Rußbeaufschlagung und Geruchsbelastung.</p></div>
+  <section class="section">
+    <div class="wasser-grid">
+      <div class="content-prose">
+        <h2>Was versteht man unter einem Brandschaden?</h2>
+        <p>Wenn in einer Wohnung, einem Haus oder einem Bürogebäude ein Feuer ausbricht, ist der Schaden oft immens. Hausrat, Einrichtung und Warenbestände werden zerstört, Wände durch Ruß beaufschlagt.</p>
+        <p>Mit einer ausreichenden Versicherung können Sie nach den Löscharbeiten mit dem Wiederaufbau beginnen. Wir stehen Ihnen mit langjähriger Erfahrung und modernsten Verfahren zur Seite.</p>
+        <h2>Geruchsneutralisation</h2>
+        <p><strong>Fogging</strong> – Wirkstoffe als feiner Nebel verteilt, dringen in Materialien und Wände ein, um Gerüche, Bakterien und Schimmelsporen zu beseitigen.</p>
+        <p><strong>Ozonbehandlung</strong> – Ozon zersetzt geruchsverursachende Moleküle schnell und effektiv, auch in feinsten Ritzen.</p>
+        <div style="margin-top:40px;"><h2 style="font-size:22px;margin-bottom:20px;">Verfahrenstechniken</h2>
+        <div class="technique-grid">
+          <div class="technique-card"><h4>Fogging</h4><p>Vernebeln von Wirkstoffen zur Geruchsneutralisation und Keimreduzierung.</p></div>
+          <div class="technique-card"><h4>Ozonbehandlung</h4><p>Zersetzung geruchsverursachender Moleküle, auch in feinsten Fugen.</p></div>
+          <div class="technique-card"><h4>Airlessverfahren</h4><p>Schnelles Aufbringen von Farbe – dreimal schneller als konventionelles Streichen.</p></div>
+          <div class="technique-card"><h4>Hochdruckwaschen</h4><p>Gründliche Reinigung stark verschmutzter Flächen mit Hochdruck.</p></div>
+          <div class="technique-card"><h4>Sprühextraktion</h4><p>Sanfte Teppich- und Oberflächenreinigung – schnell sauber und trocken.</p></div>
+          <div class="technique-card"><h4>Sand- / Eisstrahlen</h4><p>Gründliche Oberflächenreinigung ohne aggressive Chemikalien.</p></div>
+        </div></div>
+      </div>
+      <div>
+        <div class="side-img"><img src="https://rolfina.de/wp-content/uploads/2020/12/Brandschaden-E-Auto2-400x284.jpg" alt="Brandschaden" style="filter:brightness(0.6) saturate(0.5);"></div>
+        <div class="side-cta">
+          <p style="font-size:13px;color:var(--c-muted);margin-bottom:14px;font-weight:300;"><strong style="color:var(--c-text);font-weight:600;">Soforthilfe anfordern</strong><br>Kostenfrei · 24/7 erreichbar</p>
+          <a href="tel:+498000066444" class="btn-primary" style="width:100%;justify-content:center;background:#a32d2d;">📞 0800 – 00 66 444</a>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:64px;"><h2 class="section-title" style="font-size:26px;margin-bottom:24px;">Impressionen</h2>
+    <div class="gallery-grid">
+      <img src="https://rolfina.de/wp-content/uploads/2020/12/Brandschaden-E-Auto2-400x284.jpg" alt="">
+      <img src="https://rolfina.de/wp-content/uploads/2020/12/20170628_083756_resized_1-400x284.jpg" alt="">
+      <img src="https://rolfina.de/wp-content/uploads/2020/12/Russbeaufschlagung-Werkstatt-400x284.jpg" alt="">
+      <img src="https://rolfina.de/wp-content/uploads/2020/12/20151020_142324.jpg" alt="">
+    </div></div>
+  </section>
+  <div class="cta-band"><h2>Brandschaden? Wir kommen <em>sofort.</em></h2><div class="cta-band-right"><div class="phone-big">0800 – 00 66 444</div><div class="phone-label">Kostenfrei · 24/7</div><a href="#" onclick="showPage('kontakt'); return false;" class="btn-primary">Anfrage stellen</a></div></div>
+</div>
+
+<!-- SANIERUNG -->
+<div class="page" id="page-sanierung">
+  <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home'); return false;">Startseite</a> / Gebäudesanierung</div><div class="eyebrow"><div class="eyebrow-line"></div><span>Professionelle Sanierung</span></div><h1 class="section-title">Gebäudesanierung</h1><p class="section-sub">Von der energetischen Sanierung bis zur vollständigen Instandsetzung – wir planen und realisieren mit höchster Qualität.</p></div>
+  <section class="section">
+    <div class="wasser-grid">
+      <div class="content-prose">
+        <h2>Energetische Gebäudesanierung</h2>
+        <p>Hohe Energiekosten fallen bei Gebäuden an, die keine ausreichende Sanierung erhalten haben. Durch optimale Dämmung lassen sich <strong>bis zu 70% der Heizkosten einsparen!</strong></p>
+        <h2>Förderungen nutzen</h2>
+        <p>Bund und Länder fördern Sanierungsmaßnahmen umfangreich. Wichtig: Förderungen müssen <strong>vor Beginn der Maßnahme</strong> beantragt werden.</p>
+        <h2>Ablauf einer Gebäudesanierung</h2>
+        <ul><li>Kostenlose Erstberatung und Bedarfsanalyse</li><li>Thermografie-Analyse zur Identifikation von Schwachstellen</li><li>Individuelle Planung durch unsere Diplom-Ingenieure</li><li>Förderanträge stellen und genehmigen lassen</li><li>Durchführung nach vereinbartem Zeitplan</li><li>Qualitätskontrolle und Übergabe</li></ul>
+        <div style="margin-top:36px;"><div class="services-grid-2">
+          <div class="svc-item"><h4>Abbruch & Rückbau</h4><p>Fachgerechter Abbruch und Rückbau.</p></div>
+          <div class="svc-item"><h4>Mauerarbeiten</h4><p>Neu- und Wiederherstellung in höchster Qualität.</p></div>
+          <div class="svc-item"><h4>Trockenbau</h4><p>Wände, Decken und Abtrennungen.</p></div>
+          <div class="svc-item"><h4>Dachsanierung</h4><p>Abdichtung, Dämmung und Erneuerung.</p></div>
+          <div class="svc-item"><h4>Fenster & Türen</h4><p>Austausch für bessere Energiebilanz.</p></div>
+          <div class="svc-item"><h4>Fliesenarbeiten</h4><p>Bad, Küche, Terrasse – professionell verlegt.</p></div>
+          <div class="svc-item"><h4>Dämmung</h4><p>Außenwand, Dach, Keller – optimal gedämmt.</p></div>
+          <div class="svc-item"><h4>Innenausbau</h4><p>Vom Rohbau bis zur bezugsfertigen Einheit.</p></div>
+        </div></div>
+      </div>
+      <div>
+        <div class="side-img"><img src="https://rolfina.de/wp-content/uploads/2020/12/P1060482-400x284.jpg" alt="Sanierung" style="filter:brightness(0.75) saturate(0.7);"></div>
+        <div class="side-cta">
+          <p style="font-size:13px;color:var(--c-muted);margin-bottom:8px;font-weight:300;"><strong style="color:var(--c-text);font-weight:600;">Kostenlose Beratung</strong></p>
+          <p style="font-size:12px;color:var(--c-muted);margin-bottom:14px;font-weight:300;">Wir analysieren Ihr Einsparpotenzial und planen die optimalen Maßnahmen.</p>
+          <a href="#" onclick="showPage('kontakt'); return false;" class="btn-primary" style="width:100%;justify-content:center;background:#27ae60;">Beratungsgespräch anfragen</a>
+        </div>
+        <div style="margin-top:20px;">
+          <div class="gallery-grid" style="grid-template-columns:repeat(2,1fr);">
+            <img src="https://rolfina.de/wp-content/uploads/2020/12/P1060420-400x284.jpg" alt="">
+            <img src="https://rolfina.de/wp-content/uploads/2020/12/P1060416-400x284.jpg" alt="">
+            <img src="https://rolfina.de/wp-content/uploads/2020/12/P1060406-400x284.jpg" alt="">
+            <img src="https://rolfina.de/wp-content/uploads/2020/12/P1060407-400x284.jpg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="cta-band"><h2>Jetzt Energiekosten <em>dauerhaft senken.</em></h2><div class="cta-band-right"><div class="phone-big">089 – 61 06 64 44</div><div class="phone-label">München · Mo–Fr 8–18 Uhr</div><a href="#" onclick="showPage('kontakt'); return false;" class="btn-primary">Beratung anfragen</a></div></div>
+</div>
+
+<!-- ÜBER UNS -->
+<div class="page" id="page-ueber">
+  <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home'); return false;">Startseite</a> / Über uns</div><div class="eyebrow"><div class="eyebrow-line"></div><span>Wer wir sind</span></div><h1 class="section-title">Über Rolfina GmbH</h1><p class="section-sub">Ihr Ansprechpartner bei Brandschäden, Wasserschäden und Gebäudesanierung – in München und NRW.</p></div>
+  <section class="section">
+    <div class="about-grid">
+      <div>
+        <div class="about-img"><img src="https://rolfina.eu/wp-content/uploads/2024/02/rolfina-headerbild-jueber-uns03.jpg" alt="Über Rolfina"></div>
+        <div class="about-pullquote"><p>„Gemeinsam Hand in Hand"</p><cite>Ina Stalidzane, Gründerin & Geschäftsführerin</cite></div>
+      </div>
+      <div class="about-text">
+        <h2>Der Kunde steht bei uns im Vordergrund.</h2>
+        <p>Durch kooperative Zusammenarbeit, hohe Qualität, große Erfahrung und Flexibilität helfen wir unkompliziert und kompetent – von der Schadenaufnahme bis zur vollständigen Wiederherstellung.</p>
+        <p>Unsere Vision ist es, der deutschlandweit <strong>führende Ansprechpartner</strong> für innovative und nachhaltige Lösungen bei der Reparatur von Gebäuden durch Feuer und Wasser zu sein.</p>
+        <div class="about-services">
+          <div class="about-svc">24 Stunden Notdienst</div>
+          <div class="about-svc">Soforthilfe & Räumung</div>
+          <div class="about-svc">Desinfektion</div>
+          <div class="about-svc">Bergung & Einlagerung</div>
+          <div class="about-svc">Schimmelbekämpfung</div>
+          <div class="about-svc">Diplom-Ingenieure</div>
+          <div class="about-svc">Versicherungsabwicklung</div>
+          <div class="about-svc">Komplettabwicklung</div>
+        </div>
+        <div style="margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="contact-card"><h3>München</h3><div class="contact-detail"><div class="icon-circle">📍</div>Esmarchstraße 23</div><div class="contact-detail"><div class="icon-circle">📞</div>089 – 61 06 64 44</div></div>
+          <div class="contact-card"><h3>NRW</h3><div class="contact-detail"><div class="icon-circle">📍</div>Salinger Feld 54, Witten</div><div class="contact-detail"><div class="icon-circle">📞</div>02302 – 18 51 10</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- JOBS -->
+<div class="page" id="page-jobs">
+  <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home'); return false;">Startseite</a> / Jobs</div><div class="eyebrow"><div class="eyebrow-line"></div><span>Karriere bei Rolfina</span></div><h1 class="section-title">Wir suchen Macher,<br>nicht Mitläufer.</h1><p class="section-sub">Menschen, die Aufgaben mit Liebe zum Detail anpacken und ihren Job als Berufung begreifen.</p></div>
+  <section class="section">
+    <div class="location-badge">München</div>
+    <div class="jobs-grid">
+      <div class="job-card"><div class="job-header"><h3 class="job-title">Projektleiter*in (m/w/d)</h3><span class="job-location">München</span></div><div class="job-body"><div class="job-section"><h4>Anforderungen</h4><ul><li>Staatl. gepr. Hochbautechniker oder Dipl.-Ing.</li><li>IT-Kenntnisse (Windows, ERP)</li><li>Führungserfahrung</li><li>Führerschein Klasse B</li></ul></div><div class="job-section"><h4>Aufgaben</h4><ul><li>Selbstständige Schadenaufnahme</li><li>Angebote & Rechnungen erstellen</li><li>Mitarbeitereinweisung vor Ort</li><li>Qualitätskontrolle</li></ul></div></div><div class="job-benefits"><span class="benefit-tag">Firmenwagen</span><span class="benefit-tag">Laptop & Tablet</span><span class="benefit-tag">Firmenhandy</span><span class="benefit-tag">Jobrad</span></div><div style="margin-top:18px;"><a href="mailto:info@rolfina.de" class="btn-primary">Jetzt bewerben</a></div></div>
+      <div class="job-card"><div class="job-header"><h3 class="job-title">Bürokraft Backoffice (m/w/d)</h3><span class="job-location">München · Vollzeit</span></div><div class="job-body"><div class="job-section"><h4>Ihr Profil</h4><ul><li>Kaufmännische Ausbildung</li><li>MS-Office sicher</li><li>Gute Deutschkenntnisse</li><li>Organisationsgeschick</li></ul></div><div class="job-section"><h4>Aufgaben</h4><ul><li>Aufträge & Rechnungen</li><li>Terminkoordination</li><li>Personalangelegenheiten</li><li>Datenbankpflege</li></ul></div></div><div class="job-benefits"><span class="benefit-tag">Firmenhandy</span><span class="benefit-tag">Parkplatz</span><span class="benefit-tag">Weiterbildung</span></div><div style="margin-top:18px;"><a href="mailto:info@rolfina.de" class="btn-primary">Jetzt bewerben</a></div></div>
+      <div class="job-card"><div class="job-header"><h3 class="job-title">Techniker / Allrounder (m/w/d)</h3><span class="job-location">München · Vollzeit</span></div><div class="job-body"><div class="job-section"><h4>Ihr Profil</h4><ul><li>Handwerksausbildung</li><li>Führerschein Klasse B</li><li>Teamfähigkeit</li></ul></div><div class="job-section"><h4>Aufgaben</h4><ul><li>Trocknungsmaßnahmen</li><li>Kontrollmessungen</li><li>Schimmelsanierung</li></ul></div></div><div class="job-benefits"><span class="benefit-tag">Firmenwagen</span><span class="benefit-tag">Arbeitskleidung</span><span class="benefit-tag">Unbefristet</span></div><div style="margin-top:18px;"><a href="mailto:info@rolfina.de" class="btn-primary">Jetzt bewerben</a></div></div>
+    </div>
+    <div class="location-badge" style="margin-top:56px;">Witten (NRW)</div>
+    <div class="jobs-grid">
+      <div class="job-card"><div class="job-header"><h3 class="job-title">Projektleiter*in (m/w/d)</h3><span class="job-location">Witten NRW</span></div><div class="job-body"><div class="job-section"><h4>Anforderungen</h4><ul><li>Staatl. gepr. Hochbautechniker oder Dipl.-Ing.</li><li>IT-Kenntnisse</li><li>Führerschein Klasse B</li></ul></div><div class="job-section"><h4>Aufgaben</h4><ul><li>Schadenaufnahme</li><li>Angebote & Rechnungsstellung</li><li>Qualitätskontrolle</li></ul></div></div><div class="job-benefits"><span class="benefit-tag">Firmenwagen</span><span class="benefit-tag">Laptop & Tablet</span></div><div style="margin-top:18px;"><a href="mailto:info-nrw@rolfina.de" class="btn-primary">Jetzt bewerben</a></div></div>
+      <div class="job-card"><div class="job-header"><h3 class="job-title">Installateur / Leckorter (m/w/d)</h3><span class="job-location">Witten NRW</span></div><div class="job-body"><div class="job-section"><h4>Ihr Profil</h4><ul><li>Handwerksausbildung Heizung/Sanitär</li><li>Führerschein Klasse B</li><li>Deutschkenntnisse</li></ul></div><div class="job-section"><h4>Aufgaben</h4><ul><li>Leckageortungen</li><li>Notreparaturen</li><li>Fotodokumentation</li></ul></div></div><div class="job-benefits"><span class="benefit-tag">Krisensicher</span><span class="benefit-tag">Weiterbildung</span></div><div style="margin-top:18px;"><a href="mailto:info-nrw@rolfina.de" class="btn-primary">Jetzt bewerben</a></div></div>
+      <div class="job-card"><div class="job-header"><h3 class="job-title">Trocknungstechniker (m/w/d)</h3><span class="job-location">Witten NRW</span></div><div class="job-body"><div class="job-section"><h4>Ihr Profil</h4><ul><li>Handwerksausbildung</li><li>Führerschein Klasse B</li><li>Teamfähigkeit</li></ul></div><div class="job-section"><h4>Aufgaben</h4><ul><li>Trocknungsmaßnahmen</li><li>Kontrollmessungen</li><li>Schimmelsanierung</li></ul></div></div><div class="job-benefits"><span class="benefit-tag">Unbefristet</span><span class="benefit-tag">Krisensicher</span></div><div style="margin-top:18px;"><a href="mailto:info-nrw@rolfina.de" class="btn-primary">Jetzt bewerben</a></div></div>
+    </div>
+    <div style="margin-top:40px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:12px;padding:32px;text-align:center;">
+      <div class="eyebrow" style="justify-content:center;margin-bottom:12px;"><div class="eyebrow-line"></div><span>Nichts Passendes dabei?</span><div class="eyebrow-line"></div></div>
+      <h3 style="font-family:var(--font-display);font-size:24px;font-weight:700;margin-bottom:12px;color:var(--c-text);">Initiativbewerbungen willkommen!</h3>
+      <p style="color:var(--c-muted);margin-bottom:20px;font-size:14px;font-weight:300;">Senden Sie uns Ihre Unterlagen direkt zu.</p>
+      <a href="mailto:info@rolfina.de" class="btn-primary">info@rolfina.de</a>
+    </div>
+  </section>
+</div>
+
+<!-- KONTAKT -->
+<div class="page" id="page-kontakt">
+  <div class="page-hero"><div class="breadcrumb"><a href="#" onclick="showPage('home'); return false;">Startseite</a> / Kontakt</div><div class="eyebrow"><div class="eyebrow-line"></div><span>Kontakt</span></div><h1 class="section-title">Rückrufservice – schnell & unkompliziert!</h1><p class="section-sub">Füllen Sie das Formular aus oder rufen Sie direkt an.</p></div>
+  <section class="section">
+    <div class="contact-grid">
+      <div>
+        <h2 style="font-family:var(--font-display);font-size:24px;font-weight:700;margin-bottom:24px;color:var(--c-text);">Schreiben Sie uns</h2>
+        <div class="form-row"><div class="form-group"><label>Anrede</label><select><option>Bitte wählen</option><option>Frau</option><option>Herr</option><option>Divers</option></select></div><div class="form-group"><label>Firma</label><input type="text" placeholder="Optional"></div></div>
+        <div class="form-row"><div class="form-group"><label>Vorname</label><input type="text" placeholder="Max"></div><div class="form-group"><label>Nachname</label><input type="text" placeholder="Mustermann"></div></div>
+        <div class="form-row"><div class="form-group"><label>Telefon</label><input type="tel" placeholder="+49 89 ..."></div><div class="form-group"><label>E-Mail</label><input type="email" placeholder="max@beispiel.de"></div></div>
+        <div class="form-group"><label>Anliegen</label><select><option>Bitte wählen</option><option>Wasserschaden</option><option>Brandschaden</option><option>Gebäudesanierung</option><option>Sonstiges</option></select></div>
+        <div class="form-group"><label>Nachricht</label><textarea placeholder="Beschreiben Sie kurz Ihr Anliegen..."></textarea></div>
+        <div class="form-check"><input type="checkbox" id="priv"><label for="priv">Ich stimme der <a href="#">Datenschutzerklärung</a> zu.</label></div>
+        <button class="btn-primary" style="width:100%;justify-content:center;font-size:14px;padding:14px;">Rückruf anfordern →</button>
+      </div>
+      <div class="contact-info">
+        <div class="contact-card"><h3>🏢 Zentrale München</h3><div class="contact-detail"><div class="icon-circle">📍</div>Esmarchstraße 23, 80999 München</div><div class="contact-detail"><div class="icon-circle">📞</div><a href="tel:+4989610664444">089 – 61 06 64 44</a></div><div class="contact-detail"><div class="icon-circle">✉️</div><a href="mailto:info@rolfina.de">info@rolfina.de</a></div><div class="contact-detail"><div class="icon-circle">🕐</div>Notdienst 24/7 · 0800 – 00 66 444</div></div>
+        <div class="contact-card"><h3>🏢 Niederlassung NRW</h3><div class="contact-detail"><div class="icon-circle">📍</div>Salinger Feld 54, 58454 Witten</div><div class="contact-detail"><div class="icon-circle">📞</div><a href="tel:+4923021851110">02302 – 18 51 10</a></div><div class="contact-detail"><div class="icon-circle">✉️</div><a href="mailto:info@rolfina.de">info@rolfina.de</a></div></div>
+        <div><h3 style="font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:16px;color:var(--c-text);">Ihre Ansprechpartner*innen</h3>
+        <div class="team-grid">
+          <div class="team-card"><img src="https://rolfina.eu/wp-content/uploads/2024/02/profil-ina-stalidzane.jpg" alt="Ina Stalidzane"><div class="team-card-body"><h4>Ina Stalidzane</h4><span>Dipl.-Ing. · Geschäftsführung</span><a href="mailto:info@rolfina.de">E-Mail</a></div></div>
+          <div class="team-card"><img src="https://rolfina.eu/wp-content/uploads/2024/02/profil-patricija-stalidzane.jpg" alt="Patricija Stalidzane"><div class="team-card-body"><h4>Patricija Stalidzane</h4><span>Regionalleitung Oberbayern</span><a href="mailto:patricija.stalidzane@rolfina.de">E-Mail</a></div></div>
+          <div class="team-card"><img src="https://rolfina.de/wp-content/uploads/2025/08/profil-timo-friedrich.jpg" alt="Timo Friedrich"><div class="team-card-body"><h4>Timo Friedrich</h4><span>Filialleiter München</span><a href="mailto:friedrich@rolfina.de">E-Mail</a></div></div>
+          <div class="team-card"><img src="https://rolfina.eu/wp-content/uploads/2024/02/profil-frank-schoutissen.jpg" alt="Frank Schoutissen"><div class="team-card-body"><h4>Frank Schoutissen</h4><span>Regionalleitung NRW</span><a href="mailto:info-nrw@rolfina.de">E-Mail</a></div></div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo"><img src="https://rolfina.eu/wp-content/uploads/2020/12/logo-rolfina.svg" alt="Rolfina GmbH"></div><p>Ihr zuverlässiger Partner bei Wasserschäden, Brandschäden und Gebäudesanierung. 24/7 erreichbar in München und NRW.</p><div class="footer-social"><a href="#">in</a><a href="#">f</a><a href="#">▶</a></div></div>
+    <div class="footer-col"><h4>Leistungen</h4><ul><li><a href="#" onclick="showPage('wasser'); return false;">Wasserschaden</a></li><li><a href="#" onclick="showPage('brand'); return false;">Brandschaden</a></li><li><a href="#" onclick="showPage('sanierung'); return false;">Gebäudesanierung</a></li></ul></div>
+    <div class="footer-col"><h4>Unternehmen</h4><ul><li><a href="#" onclick="showPage('ueber'); return false;">Über uns</a></li><li><a href="#" onclick="showPage('jobs'); return false;">Jobs</a></li><li><a href="#" onclick="showPage('kontakt'); return false;">Kontakt</a></li></ul></div>
+    <div class="footer-col"><h4>Kontakt</h4><div class="footer-address"><strong>München</strong>Esmarchstraße 23<br>80999 München<br>089-61 06 64 44</div><div class="footer-address" style="margin-top:12px;"><strong>NRW</strong>Salinger Feld 54<br>58454 Witten<br>02302-18 51 10</div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Rolfina GmbH. Alle Rechte vorbehalten.</span><span><a href="#">Datenschutz</a> · <a href="#">Impressum</a></span></div>
+</footer>
+
+<a class="emergency-float" href="tel:+498000066444"><span class="pulse-dot"></span>Notfall: 0800 – 00 66 444</a>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const t = document.getElementById('page-' + id);
+    if (t) t.classList.add('active');
+    document.querySelectorAll('[data-page]').forEach(a => a.classList.toggle('active', a.dataset.page === id));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.add('open'));
+  document.getElementById('mobileClose').addEventListener('click', closeMobile);
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+  const html = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  setTheme(localStorage.getItem('rolfina-sc-theme') || 'light');
+  toggle.addEventListener('click', () => { const n = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; setTheme(n); localStorage.setItem('rolfina-sc-theme', n); });
+  function setTheme(t) { html.setAttribute('data-theme', t); toggle.textContent = t === 'dark' ? '☀️' : '🌙'; }
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item'), body = item.querySelector('.faq-body'), isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-body').style.maxHeight = '0'; });
+    if (!isOpen) { item.classList.add('open'); body.style.maxHeight = body.scrollHeight + 'px'; }
+  }
+  const obs = new IntersectionObserver(e => e.forEach(x => { if (x.isIntersecting) { x.target.style.opacity='1'; x.target.style.transform='translateY(0)'; obs.unobserve(x.target); } }), { threshold: 0.08 });
+  document.querySelectorAll('.service-row,.feature-row,.technique-card,.job-card,.team-card,.contact-card,.svc-item,.about-svc').forEach((el,i) => { el.style.opacity='0'; el.style.transform='translateY(16px)'; el.style.transition=`opacity 0.4s ease ${i*0.04}s,transform 0.4s ease ${i*0.04}s`; obs.observe(el); });
+</script>
+</body>
+</html>
